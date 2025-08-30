@@ -1,11 +1,4 @@
-# Installation Instructions
-
-## Method 1: Chrome Web Store (Recommended)
-1. Visit the Chrome Web Store link (when available)
-2. Click "Add to Chrome"
-3. Confirm the installation
-
-## Method 2: Manual Installation (Developer Mode)
+Manual Installation (Developer Mode)
 
 ### Step 1: Download the Extension
 1. Download all the extension files to a folder on your computer
@@ -32,3 +25,4 @@
 
 ## Security Note
 This extension only works on College Board websites and doesn't collect any personal data. All settings are stored locally in your browser.
+
