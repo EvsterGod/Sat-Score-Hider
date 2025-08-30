@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "SAT Score Hider",
+  "version": "1.0",
+  "description": "Hides SAT scores on College Board until clicked to reveal them",
+      "permissions": [
+        "activeTab",
+        "scripting",
+        "storage"
+    ],
+  "host_permissions": [
+    "https://*.collegeboard.org/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://*.collegeboard.org/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "SAT Score Hider"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}

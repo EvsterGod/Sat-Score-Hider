@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAT Score Hider</title>
+    <style>
+        body {
+            width: 300px;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .header p {
+            margin: 5px 0 0 0;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .status {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #4CAF50;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .info {
+            font-size: 11px;
+            opacity: 0.8;
+            text-align: center;
+            margin-top: 15px;
+            line-height: 1.4;
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 6px;
+        }
+
+        .toggle-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 40px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #4CAF50;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+        
+        .settings-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .settings-section h3 {
+            margin: 0 0 15px 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .setting-group {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .setting-group h4 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .range-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .range-inputs label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .range-inputs input {
+            width: 50px;
+            padding: 3px 6px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            font-size: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .range-inputs input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .settings-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        .save-btn {
+            background: #28a745 !important;
+        }
+        
+        .save-btn:hover {
+            background: #218838 !important;
+        }
+        
+        .reset-btn {
+            background: #dc3545 !important;
+        }
+        
+                 .reset-btn:hover {
+             background: #c82333 !important;
+         }
+         
+         .sound-settings {
+             display: flex;
+             flex-direction: column;
+             gap: 10px;
+         }
+         
+         .sound-option {
+             display: flex;
+             flex-direction: column;
+             gap: 5px;
+         }
+         
+         .sound-option label {
+             font-size: 12px;
+             font-weight: 500;
+             opacity: 0.9;
+         }
+         
+         .sound-option select {
+             padding: 5px;
+             border: 1px solid rgba(255, 255, 255, 0.3);
+             border-radius: 3px;
+             font-size: 12px;
+             background: rgba(255, 255, 255, 0.1);
+             color: white;
+             cursor: pointer;
+         }
+         
+         .sound-option select option {
+             background: #333;
+             color: white;
+         }
+         
+         .sound-toggle {
+             margin-top: 10px;
+         }
+         
+         .sound-toggle label {
+             display: flex;
+             align-items: center;
+             gap: 8px;
+             font-size: 12px;
+             cursor: pointer;
+         }
+         
+         .sound-toggle input[type="checkbox"] {
+             width: 16px;
+             height: 16px;
+             accent-color: #4CAF50;
+         }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎯 SAT Score Hider</h1>
+        <p>Hide your SAT scores until you're ready to see them</p>
+    </div>
+
+    <div class="status">
+        <span class="status-indicator"></span>
+        <span id="statusText">Active on College Board</span>
+    </div>
+
+    <div class="controls">
+        <div class="toggle-container">
+            <span class="toggle-label">Auto-hide scores</span>
+            <div class="toggle-switch active" id="toggleSwitch"></div>
+        </div>
+        
+        <button class="btn" id="hideAllBtn">Hide All Scores Now</button>
+        <button class="btn" id="revealAllBtn">Reveal All Scores</button>
+        <button class="btn" id="showBigBtn">Show Big Reveal Button</button>
+        <button class="btn" id="testEffectsBtn">Test Effects</button>
+        <button class="btn" id="refreshBtn">Refresh Page</button>
+        
+        <div class="settings-section">
+            <h3>🎯 Score Effects Settings</h3>
+            
+                         <div class="setting-group">
+                 <h4>Total Score</h4>
+                 <div class="range-inputs">
+                     <label>Good Range: <input type="number" id="total-good-min" min="400" max="1600"> - <input type="number" id="total-good-max" min="400" max="1600"></label>
+                     <label>Mid Range: <input type="number" id="total-mid-min" min="400" max="1600"> - <input type="number" id="total-mid-max" min="400" max="1600"></label>
+                     <label>Bad Range: <input type="number" id="total-bad-min" min="400" max="1600"> - <input type="number" id="total-bad-max" min="400" max="1600"></label>
+                 </div>
+             </div>
+            
+                         <div class="setting-group">
+                 <h4>Reading & Writing</h4>
+                 <div class="range-inputs">
+                     <label>Good Range: <input type="number" id="reading-good-min" min="200" max="800"> - <input type="number" id="reading-good-max" min="200" max="800"></label>
+                     <label>Mid Range: <input type="number" id="reading-mid-min" min="200" max="800"> - <input type="number" id="reading-mid-max" min="200" max="800"></label>
+                     <label>Bad Range: <input type="number" id="reading-bad-min" min="200" max="800"> - <input type="number" id="reading-bad-max" min="200" max="800"></label>
+                 </div>
+             </div>
+            
+                         <div class="setting-group">
+                 <h4>Math</h4>
+                 <div class="range-inputs">
+                     <label>Good Range: <input type="number" id="math-good-min" min="200" max="800"> - <input type="number" id="math-good-max" min="200" max="800"></label>
+                     <label>Mid Range: <input type="number" id="math-mid-min" min="200" max="800"> - <input type="number" id="math-mid-max" min="200" max="800"></label>
+                     <label>Bad Range: <input type="number" id="math-bad-min" min="200" max="800"> - <input type="number" id="math-bad-max" min="200" max="800"></label>
+                 </div>
+             </div>
+             
+             <div class="setting-group">
+                 <h4>🎵 Sound Effects</h4>
+                 <div class="sound-settings">
+                                           <div class="sound-option">
+                          <label>Good Score Sound:</label>
+                          <select id="good-score-sound">
+                              <option value="default">🎵 Heavenly Music</option>
+                              <option value="confetti">📢 MLG Air Horn</option>
+                              <option value="success">🎮 Guest 1337 Forsaken</option>
+                              <option value="custom">📁 Custom Upload</option>
+                          </select>
+                          <input type="file" id="good-score-custom" accept="audio/*" style="display: none;">
+                      </div>
+                                           <div class="sound-option">
+                          <label>Mid Score Sound:</label>
+                          <select id="mid-score-sound">
+                              <option value="default">✅ Check Mark</option>
+                              <option value="neutral">🎭 Among Us Role Reveal</option>
+                              <option value="okay">😴 Man Snoring</option>
+                              <option value="custom">📁 Custom Upload</option>
+                          </select>
+                          <input type="file" id="mid-score-custom" accept="audio/*" style="display: none;">
+                      </div>
+                                           <div class="sound-option">
+                          <label>Bad Score Sound:</label>
+                          <select id="bad-score-sound">
+                              <option value="default">💨 Fart Meme Sound</option>
+                              <option value="fail">💀 Death Sound (Fortnite)</option>
+                              <option value="sad">🤡 You Are An Idiot</option>
+                              <option value="custom">📁 Custom Upload</option>
+                          </select>
+                          <input type="file" id="bad-score-custom" accept="audio/*" style="display: none;">
+                      </div>
+                     <div class="sound-toggle">
+                         <label>
+                             <input type="checkbox" id="enable-sounds" checked>
+                             Enable Sound Effects
+                         </label>
+                     </div>
+                 </div>
+             </div>
+            
+            <div class="settings-buttons">
+                <button class="btn save-btn" id="saveSettingsBtn">Save Settings</button>
+                <button class="btn reset-btn" id="resetSettingsBtn">Reset to Default</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="info">
+        <p>This extension automatically hides SAT scores on College Board pages. Click on hidden scores to reveal them individually.</p>
+        <p>Works on: collegeboard.org</p>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
