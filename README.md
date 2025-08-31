@@ -38,7 +38,8 @@ See [INSTALLATION.md](INSTALLATION.md) for detailed manual installation instruct
 
 ## 📖 How to Use
 
-1. **Install the extension** using one of the methods above
+Sorry just gonna make an easy guide to download cus i lowkey chat gped the read me on the github and its weird lol. Basically the zip file is on github, you need to download that then go to ur extensions on chrome and click developor mode and turn it on ( this doesn't change anything just lets u upload files) and then go to load unpacked and put the files. You probably have to unzip it, so just put the files inside the zip into a new folder and upload. And then from there the extension is pretty self explenatory, theres a few features u can look at when u click the widget in the top
+
 2. **Visit any College Board page** with SAT scores
 3. **Scores will be automatically hidden** with "[Click to reveal SAT score]" text
 4. **Click individual scores** to reveal them with effects
@@ -97,3 +98,4 @@ For issues, questions, or feature requests:
 ---
 
 **Note**: This extension is not affiliated with College Board. Use responsibly and respect academic integrity policies.
+
